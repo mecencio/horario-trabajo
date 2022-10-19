@@ -107,19 +107,26 @@ class Datos {
     calcularDiferencia() {
         if (this.deberiaSalir != "" && this.salida != "") {
 
-            let deberia = (parseFloat(this.#entrada.value.slice(0,3))*60 + parseFloat(this.#entrada.value.slice(3)) + 450);
+            let entrada = parseFloat(this.#entrada.value.slice(0,3))*60 + parseFloat(this.#entrada.value.slice(3))
+            let deberia = (entrada + 450);
             let salida = parseFloat(this.#salida.value.slice(0,3))*60 + parseFloat(this.#salida.value.slice(3));
             let dif;
 
             if (deberia > salida) {
+                dif = (salida-entrada)/60;
+                this.#hsTrab.value = parseInt(dif).toLocaleString('es-ES', {minimumIntegerDigits: 2}) + ":" + parseInt((60 * (dif - parseInt(dif))).toFixed(2)).toLocaleString('es-ES', {minimumIntegerDigits: 2});
                 dif = (deberia-salida)/60;
                 this.#diferencia.value = parseInt(dif).toLocaleString('es-ES', {minimumIntegerDigits: 2}) + ":" + parseInt((60 * (dif - parseInt(dif))).toFixed(2)).toLocaleString('es-ES', {minimumIntegerDigits: 2});
                 this.#difTexto.value = "Faltó";
             } else if (deberia < salida) {
+                dif = (salida-entrada)/60;
+                this.#hsTrab.value = parseInt(dif).toLocaleString('es-ES', {minimumIntegerDigits: 2}) + ":" + parseInt((60 * (dif - parseInt(dif))).toFixed(2)).toLocaleString('es-ES', {minimumIntegerDigits: 2});
                 dif = (salida-deberia)/60;
                 this.#diferencia.value = parseInt(dif).toLocaleString('es-ES', {minimumIntegerDigits: 2}) + ":" + parseInt((60 * (dif - parseInt(dif))).toFixed(2)).toLocaleString('es-ES', {minimumIntegerDigits: 2});
                 this.#difTexto.value = "Sobró";
             } else {
+                dif = (salida-entrada)/60;
+                this.#hsTrab.value = parseInt(dif).toLocaleString('es-ES', {minimumIntegerDigits: 2}) + ":" + parseInt((60 * (dif - parseInt(dif))).toFixed(2)).toLocaleString('es-ES', {minimumIntegerDigits: 2});
                 this.#diferencia.value = ""
                 this.#difTexto.value = "";
             }
