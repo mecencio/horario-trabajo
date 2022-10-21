@@ -120,7 +120,7 @@ class Datos {
         if (this.#deberiaSalir.value != "" && this.#salida.value != "") {
 
             let entrada = convertirEnInt(this.#entrada.value);
-            let deberia = (entrada + 450);
+            let deberia = convertirEnInt(this.#deberiaSalir.value);
             let salida = convertirEnInt(this.#salida.value);
             let dif;
 
@@ -144,6 +144,36 @@ class Datos {
                     this.#difTexto.value = "";
                 }
             }
+        }
+    }
+
+    guardar() {
+        let aux = {};
+        aux["dia"] = this.#dia;
+        aux["licencia"] = this.#licencia.value;
+        aux["entrada"] = this.#entrada.value;
+        aux["tenerEnCuenta"] = this.#tenerEnCuenta.value;
+        aux["deberiaSalir"] = this.#deberiaSalir.value;
+        aux["salida"] = this.#salida.value;
+        aux["hsTrab"] = this.#hsTrab.value;
+        aux["diferencia"] = this.#diferencia.value;
+        aux["difTexto"] = this.#difTexto.value;
+
+        localStorage.setItem(`${this.#dia}`, JSON.stringify(aux));
+    }
+
+    cargar() {
+        if (localStorage[`${this.#dia}`]) {
+            let aux = JSON.parse(localStorage.getItem(`${this.#dia}`));
+            this.#dia = aux["dia"];
+            this.#licencia.value = aux["licencia"];
+            this.#entrada.value = aux["entrada"];
+            this.#tenerEnCuenta.value = aux["tenerEnCuenta"];
+            this.#deberiaSalir.value = aux["deberiaSalir"];
+            this.#salida.value = aux["salida"];
+            this.#hsTrab.value = aux["hsTrab"];
+            this.#diferencia.value = aux["diferencia"];
+            this.#difTexto.value = aux["difTexto"];
         }
     }
 }
@@ -189,36 +219,20 @@ class Total {
             aux += l.getIntDiferencia();
         }
 
-        if (ma.getDiferencia().value != "") {
-            if (ma.getTenerEnCuenta().value = "true") {
-                aux = ma.getIntDiferencia();
-            } else {
-                aux += ma.getIntDiferencia();
-            }
+        if (ma.getEntrada().value != "" && ma.getSalida().value != "") {
+            aux += convertirEnInt(ma.getSalida().value) - (convertirEnInt(ma.getEntrada().value)+450);
         }
 
-        if (mi.getDiferencia().value != "") {
-            if (mi.getTenerEnCuenta().value = "true") {
-                aux = mi.getIntDiferencia();
-            } else {
-                aux += mi.getIntDiferencia();
-            }
+        if (mi.getEntrada().value != "" && mi.getSalida().value != "") {
+            aux += convertirEnInt(mi.getSalida().value) - (convertirEnInt(mi.getEntrada().value)+450);
         }
 
-        if (j.getDiferencia().value != "") {
-            if (j.getTenerEnCuenta().value = "true") {
-                aux = j.getIntDiferencia();
-            } else {
-                aux += j.getIntDiferencia();
-            }
+        if (j.getEntrada().value != "" && j.getSalida().value != "") {
+            aux += convertirEnInt(j.getSalida().value) - (convertirEnInt(j.getEntrada().value)+450);
         }
 
-        if (v.getDiferencia().value != "") {
-            if (v.getTenerEnCuenta().value = "true") {
-                aux = v.getIntDiferencia();
-            } else {
-                aux += v.getIntDiferencia();
-            }
+        if (v.getEntrada().value != "" && v.getSalida().value != "") {
+            aux += convertirEnInt(v.getSalida().value) - (convertirEnInt(v.getEntrada().value)+450);
         }
 
         return aux;
@@ -251,30 +265,58 @@ class Total {
         return aux;
     };
 
+    trabajarDiferencia (diferencia, trabajado) {
+        if (diferencia < 0) {
+            document.getElementById("TotalContainer").className = "row mt-5 pt-2 pb-0 bg-danger text-white mx-0";
+            this.setDifTextoTotal("Faltó");
+            this.setDiferenciaTotal(convertirEnHora(Math.abs(diferencia)));
+            this.setHsTrabTotal(convertirEnHora(trabajado));
+        } else if (diferencia > 0) {
+            document.getElementById("TotalContainer").className = "row mt-5 pt-2 pb-0 bg-success text-white mx-0";
+            this.setDifTextoTotal("Sobró");
+            this.setDiferenciaTotal(convertirEnHora(diferencia));
+            this.setHsTrabTotal(convertirEnHora(trabajado));
+        } else {
+            document.getElementById("TotalContainer").className = "row mt-5 pt-2 pb-0 bg-dark text-white mx-0";
+            this.setDifTextoTotal("");
+            this.setDiferenciaTotal("");
+            if (trabajado == 0) this.setHsTrabTotal("");
+            else this.setHsTrabTotal(convertirEnHora(trabajado));
+        }
+    }
+
     setearTotal(l, ma, mi, j, v) {
 
         let diferenciaTotal = this.#devolerDiferenciaTotal(l, ma, mi, j, v);
         let totalTrabajado = this.#devolerHsTrabajadas(l, ma, mi, j, v);
 
-        if (diferenciaTotal < 0) {
-            this.setDifTextoTotal("Faltó");
-            this.setDiferenciaTotal(convertirEnHora(Math.abs(diferenciaTotal)));
-            this.setHsTrabTotal(convertirEnHora(totalTrabajado));
-        } else if (diferenciaTotal > 0) {
-            this.setDifTextoTotal("Sobró");
-            this.setDiferenciaTotal(convertirEnHora(diferenciaTotal));
-            this.setHsTrabTotal(convertirEnHora(totalTrabajado));
-        } else {
-            this.setDifTextoTotal("");
-            this.setDiferenciaTotal("");
-            this.setHsTrabTotal(convertirEnHora(totalTrabajado));
-        }
+        this.trabajarDiferencia(diferenciaTotal, totalTrabajado)
     }
 
     borrarDatos() {
         this.setDifTextoTotal("");
         this.setDiferenciaTotal("");
         this.setHsTrabTotal("");
+    }
+
+    guardar() {
+        let aux = {};
+        aux["hsTrab"] = this.#hsTrab.value;
+        aux["diferencia"] = this.#diferencia.value;
+        aux["difTexto"] = this.#difTexto.value;
+    
+        localStorage.setItem("Total", JSON.stringify(aux));
+    }
+
+    cargar() {
+        if (localStorage["Total"]) {
+            let aux = JSON.parse(localStorage.getItem("Total"));
+            this.#hsTrab.value = aux["hsTrab"];
+            this.#diferencia.value = aux["diferencia"];
+            this.#difTexto.value = aux["difTexto"];
+
+            this.trabajarDiferencia(convertirEnInt(this.#diferencia.value), convertirEnInt(this.#hsTrab.value));
+        }
     }
 }
 
@@ -303,38 +345,60 @@ function crearObjetoDia (e) {
 }
 
 function setearDeberiaSalir(obj) {
-    if(!obj.getTenerEnCuenta().value) {
-        let aux = convertirEnInt(obj.getEntrada().value) + 450;
-        if (aux < 930) {
-            aux = 930;
-        }
-        if (!isNaN(aux)) {
-            obj.setDeberiaSalir(convertirEnHora(aux));
-        } else {
-            obj.setDeberiaSalir("");
-        }
+    let aux = convertirEnInt(obj.getEntrada().value) + 450;
+    if (aux < 930) {
+        aux = 930;
+    }
+    if (!isNaN(aux)) {
+        obj.setDeberiaSalir(convertirEnHora(aux));
+    } else {
+        obj.setDeberiaSalir("");
+    }
+}
+
+function diferenciasAnteriores(dia) {
+    switch (dia) {
+        case "Viernes":
+            if(jueves.getTenerEnCuenta().value == "true") return 0;
+            else return jueves.getIntDiferencia() + diferenciasAnteriores("Jueves");
+        case "Jueves":
+            if(miercoles.getTenerEnCuenta().value == "true") return 0;
+            else return miercoles.getIntDiferencia() + diferenciasAnteriores("Miercoles");
+        case "Miercoles":
+            if(martes.getTenerEnCuenta().value == "true") return 0;
+            else return martes.getIntDiferencia() + diferenciasAnteriores("Martes");
+        case "Martes":
+            return lunes.getIntDiferencia();
+        default:
+            return 0;
     }
 }
 
 function tenerEnCuentaElTotal (obj, total) {
-    if (obj.getDia() != "Lunes" && obj.getEntrada().value != "" && !isNaN(obj.getEntrada().value) && obj.getDeberiaSalir().value != "15:30") {
+    if (obj.getDia() != "Lunes" && obj.getEntrada().value != "") {
         let auxDeb = convertirEnInt(obj.getDeberiaSalir().value);
-        let auxDif = 0;
-        if (total.getDifTextoTotal().value == "Sobró") {
-            auxDif = convertirEnInt (total.getDiferenciaTotal().value);
-        } else if (total.getDifTextoTotal().value == "Faltó") {
-            auxDif = - convertirEnInt (total.getDiferenciaTotal().value);
-        }
+        let auxDif = diferenciasAnteriores(obj.getDia());
+        if(obj.getTenerEnCuenta().value == "true" && (auxDeb - auxDif) < 930)
+            auxDeb = 930;
+        // if (total.getDifTextoTotal().value == "Sobró") {
+        //     auxDif = convertirEnInt (total.getDiferenciaTotal().value);
+        // } else if (total.getDifTextoTotal().value == "Faltó") {
+        //     auxDif = - convertirEnInt (total.getDiferenciaTotal().value);
+        // }
 
         let dif = auxDeb - auxDif;
         if (dif < 930) {
             obj.setDeberiaSalir(convertirEnHora(930));
-            auxDif -= (auxDeb - obj.getDeberiaSalir().value);
-            total.setDiferenciaTotal(convertirEnHora(auxDif));
+            auxDif += (auxDeb - (convertirEnInt(obj.getEntrada().value)+450));
+            total.trabajarDiferencia(auxDif, convertirEnInt(total.getHsTrabTotal().value));
+        // } else if (dif == 0) {
         } else {
             obj.setDeberiaSalir(convertirEnHora(dif));
-            total.setDiferenciaTotal("");
-            total.setDifTextoTotal("");
+            total.trabajarDiferencia(0, convertirEnInt(total.getHsTrabTotal().value));
+        // } else {
+        //     obj.setDeberiaSalir(convertirEnHora(dif));
+        //     auxDif -= (auxDeb - 930);
+        //     total.trabajarDiferencia(auxDif, convertirEnInt(total.getHsTrabTotal().value));
         }
     }
 }
@@ -346,6 +410,80 @@ function reiniciar () {
     jueves.borrarDatos();
     viernes.borrarDatos();
     total.borrarDatos();
+    total.trabajarDiferencia(0, 0);
+    localStorage.clear();
+}
+
+function limpiarObj(obj) {
+    obj.setSalida("");
+    obj.setHsTrab("");
+    obj.setDiferencia("");
+    obj.setDifTexto("");
+}
+
+function eventosDia (obj, total) {
+    obj.getLicencia().addEventListener("change", () => {
+        if (obj.getLicencia().value == "true") {
+            obj.borrarDatos();
+            obj.setLicencia("true");
+            obj.getEntrada().setAttribute("disabled", "");
+            obj.getTenerEnCuenta().setAttribute("disabled", "");
+            obj.getSalida().setAttribute("disabled", "");
+        } else {
+            obj.getEntrada().removeAttribute("disabled");
+            obj.getTenerEnCuenta().removeAttribute("disabled");
+            obj.getSalida().removeAttribute("disabled");
+        }
+        total.setearTotal(lunes,martes,miercoles,jueves,viernes);
+        obj.guardar()
+        total.guardar();
+    });
+
+    obj.getEntrada().addEventListener("change", () => {
+        // if (convertirEnInt(obj.getEntrada().value) < 450) {
+        //     obj.setEntrada("07:30")
+        // }
+        setearDeberiaSalir(obj);
+        if (obj.getTenerEnCuenta().value == "true") {
+            limpiarObj(obj);
+            tenerEnCuentaElTotal(obj, total);
+        } else {
+            obj.calcularDiferencia();
+            total.setearTotal(lunes,martes,miercoles,jueves,viernes);
+        }
+        obj.guardar()
+        total.guardar();
+    });
+
+    obj.getTenerEnCuenta().addEventListener("change", () => {
+        if (obj.getTenerEnCuenta().value == "true") {
+            limpiarObj(obj);
+            tenerEnCuentaElTotal(obj, total);
+            if (total.getDifTextoTotal().value == "Sobró")
+                total.trabajarDiferencia(convertirEnInt(total.getDiferenciaTotal().value), convertirEnInt(total.getHsTrabTotal().value));
+            else if (total.getDifTextoTotal().value == "Faltó")
+                total.trabajarDiferencia(-convertirEnInt(total.getDiferenciaTotal().value), convertirEnInt(total.getHsTrabTotal().value));
+            else
+                total.trabajarDiferencia(0, convertirEnInt(total.getHsTrabTotal().value));
+        } else {
+            setearDeberiaSalir(obj);
+            obj.calcularDiferencia();
+            total.setearTotal(lunes,martes,miercoles,jueves,viernes);
+        }
+        obj.guardar()
+        total.guardar();
+    });
+
+    obj.getSalida().addEventListener("change", () => {
+        if (obj.getSalida().value == "") {
+            limpiarObj(obj);
+        }
+        obj.calcularDiferencia();
+        if (obj.getTenerEnCuenta().value != "true" || obj.getSalida().value != "")
+            total.setearTotal(lunes,martes,miercoles,jueves,viernes);
+        obj.guardar()
+        total.guardar();
+    });
 }
 
 
@@ -362,8 +500,12 @@ total = new Total ();
 // Boton reinicio
 let btnReinicio = document.getElementById("reinicio");
 
-
-
+lunes.cargar();
+martes.cargar();
+miercoles.cargar();
+jueves.cargar();
+viernes.cargar();
+total.cargar();
 
 /********** EVENTOS **********/
 
@@ -371,89 +513,9 @@ btnReinicio.addEventListener("click", () => {
     reiniciar();
 });
 
-// Lunes
-lunes.getLicencia().addEventListener("change", () => {
-    if (lunes.getLicencia().value == "true") {
-        lunes.borrarDatos();
-        lunes.setLicencia("true");
-        lunes.getEntrada().setAttribute("disabled", "");
-        lunes.getTenerEnCuenta().setAttribute("disabled", "");
-        lunes.getSalida().setAttribute("disabled", "");
-    } else {
-        lunes.getEntrada().removeAttribute("disabled");
-        lunes.getTenerEnCuenta().removeAttribute("disabled");
-        lunes.getSalida().removeAttribute("disabled");
-    }
-    total.setearTotal(lunes,martes,miercoles,jueves,viernes);
-});
 
-lunes.getEntrada().addEventListener("change", () => {
-    if (convertirEnInt(lunes.getEntrada().value) < 450) {
-        lunes.setEntrada("07:30")
-    }
-    setearDeberiaSalir(lunes);
-    lunes.calcularDiferencia();
-    total.setearTotal(lunes,martes,miercoles,jueves,viernes);
-});
-
-// lunes.getTenerEnCuenta().addEventListener("change", () => {
-//     lunes.setTenerEnCuenta(document.getElementById("tenerEnCuentaLunes").value);
-// });
-
-lunes.getSalida().addEventListener("change", () => {
-    let aux = lunes.getSalida().value;
-    if (aux.length < 5) {
-        aux = "0" + aux;
-    }
-    lunes.calcularDiferencia();
-    total.setearTotal(lunes,martes,miercoles,jueves,viernes);
-});
-
-// Martes
-martes.getLicencia().addEventListener("change", () => {
-    if (martes.getLicencia().value == "true") {
-        martes.borrarDatos();
-        martes.setLicencia("true");
-        martes.getEntrada().setAttribute("disabled", "");
-        martes.getTenerEnCuenta().setAttribute("disabled", "");
-        martes.getSalida().setAttribute("disabled", "");
-    } else {
-        martes.getEntrada().removeAttribute("disabled");
-        martes.getTenerEnCuenta().removeAttribute("disabled");
-        martes.getSalida().removeAttribute("disabled");
-    }
-    total.setearTotal(lunes,martes,miercoles,jueves,viernes);
-});
-
-martes.getEntrada().addEventListener("change", () => {
-    if (convertirEnInt(martes.getEntrada().value) < 450) {
-        martes.setEntrada("07:30")
-    }
-    setearDeberiaSalir(martes);
-    martes.calcularDiferencia();
-    total.setearTotal(lunes,martes,miercoles,jueves,viernes);
-});
-
-// martes.getTenerEnCuenta().addEventListener("change", () => {
-//     if (martes.getLicencia().value == "true") {
-//         martes.borrarDatos();
-//         martes.setLicencia("true");
-//         martes.getEntrada().setAttribute("disabled", "");
-//         martes.getTenerEnCuenta().setAttribute("disabled", "");
-//         martes.getSalida().setAttribute("disabled", "");
-//     } else {
-//         martes.getEntrada().removeAttribute("disabled");
-//         martes.getTenerEnCuenta().removeAttribute("disabled");
-//         martes.getSalida().removeAttribute("disabled");
-//     }
-//     total.setearTotal(lunes,martes,miercoles,jueves,viernes);
-// });
-
-martes.getSalida().addEventListener("change", () => {
-    let aux = martes.getSalida().value;
-    if (aux.length < 5) {
-        aux = "0" + aux;
-    }
-    martes.calcularDiferencia();
-    total.setearTotal(lunes,martes,miercoles,jueves,viernes);
-});
+eventosDia(lunes, total);
+eventosDia(martes, total);
+eventosDia(miercoles, total);
+eventosDia(jueves, total);
+eventosDia(viernes, total);
