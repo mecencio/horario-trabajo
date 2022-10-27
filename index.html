@@ -11,8 +11,9 @@
 </head>
 <body>
     <header class="container">
-        <nav class="navbar navbar-light border-bottom mb-1">
+        <nav class="navbar navbar-light border-bottom mb-1 justify-content-between">
             <span class="navbar-brand">Horario</span>
+            <span class="navbar-brand pt-3" style="font-size: 0.75rem;  font-weight: bold;">Web desarrollada por Nicolás Temprano</span>
         </nav>
     </header>
     <main class="container pt-3">
@@ -22,16 +23,16 @@
                 <!-- HEADER -->
                 <div class="row pt-2 pb-0 bg-dark text-white mx-0">
                     <div class="col text-center"><p>Día</p></div>
-                    <div class="col text-center"><p>¿Licencia?</p></div>
+                    <div class="col text-center"><p>¿Licencia? ¿Feriado?</p></div>
                     <div class="col text-center"><p>Horario Entrada</p></div>
                     <div class="col text-center"><p>¿Tener en cuenta total?</p></div>
                     <div class="col text-center"><p>Debería salir</p></div>
                     <div class="col text-center"><p>Salida</p></div>
                     <div class="col text-center"><p>Hs. Trabajadas</p></div>
                     <div class="col text-center"><p>Diferencia</p></div>
-                    <div class="col text-center"><p>Falto/Sobro</p></div>
+                    <div class="col text-center"><p>Faltó/Sobró</p></div>
                 </div>
-                <!-- MONDAY -->
+                <!-- LUNES -->
                 <div class="row pt-3 pb-1 mx-0">
                     <div class="col ms-3"><p>Lunes</p></div>
                     <div class="col text-center">
@@ -65,7 +66,7 @@
                         <input class="w-75" type="text" id="difTextoLunes" value="" disabled>
                     </div>
                 </div>
-                <!-- TUESDAY -->
+                <!-- MARTES -->
                 <div class="row py-1 bg-light mx-0">
                     <div class="col ms-3"><p>Martes</p></div>
                     <div class="col text-center">
@@ -99,7 +100,7 @@
                         <input class="w-75" type="text" id="difTextoMartes" value="" disabled>
                     </div>
                 </div>
-                <!-- WEDNESDAY -->
+                <!-- MIERCOLES -->
                 <div class="row py-1 mx-0">
                     <div class="col ms-3"><p>Miercoles</p></div>
                     <div class="col text-center">
@@ -133,7 +134,7 @@
                         <input class="w-75" type="text" id="difTextoMiercoles" value="" disabled>
                     </div>
                 </div>
-                <!-- THURSDAY -->
+                <!-- JUEVES -->
                 <div class="row py-1 bg-light mx-0">
                     <div class="col ms-3"><p>Jueves</p></div>
                     <div class="col text-center">
@@ -167,7 +168,7 @@
                         <input class="w-75" type="text" id="difTextoJueves" value="" disabled>
                     </div>
                 </div>
-                <!-- FRIDAY -->
+                <!-- VIERNES -->
                 <div class="row py-1 mx-0">
                     <div class="col ms-3"><p>Viernes</p></div>
                     <div class="col text-center">
@@ -222,16 +223,150 @@
             </form>
             <div class="pt-4 pt-sm-3 pt-md-3 pt-lg-3 pt-xl-3 pb-3 pb-sm-2 pb-md-2 pb-lg-2 pb-xl-3 pl-0"></div>
         </section>
-        <section class="row mx-0">
+        <section class="row mx-0 mb-3">
             <a id="reinicio" class="btn btn-block btn-primary py-2">Reiniciar</a>
         </section>
+        <section class="informacion accordion" id="faqAccordion">
+            <h2 class="text-center mt-5 mb-4">FAQ's</h2>
+            <!-- Consideraciones importantes -->
+            <!-- https://web.yammer.com/main/threads/eyJfdHlwZSI6IlRocmVhZCIsImlkIjoiMTQ0NzkzNjgzMTk4NzcxMiJ9 -->
+            <article class="informacion__importante">
+                <div class="accordion-item">
+                    <h3 class="accordion-header bold" id="headingZero">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseZero" aria-expanded="false" aria-controls="collapseZero">
+                            Consideraciones importantes
+                        </button>
+                    </h3>
+                    <div id="collapseZero" class="accordion-collapse collapse" aria-labelledby="headingZero" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <h5>Con respecto al uso de la página</h5>
+                            <p>Tenga siempre en cuenta que la página puede contener errores.</p>
+                            <p>Los campos que contienen horarios no tienen en cuenta los segundos. Por lo tanto: </p>
+                            <ul>
+                                <li>Se recomienda siempre ingresar el dato del horario de entrada en 1 minuto después para evitar errores por redondeo y, consecuentemente, evitar descuentos</li>
+                                <li>Por ejemplo, si marqué "08:26:55" voy a ingresar "08:27"</li>
+                            </ul>
+                            <p>Si detecta algún error en la página web no dude en escribirme (NNTEMPRA)</p>
+                            <h5 class="pt-2">Con respecto a los horarios de ingreso</h5>
+                            <ul>
+                                <li>Horario de ingreso entre las <strong>07:30</strong> y las <strong>09:30</strong></li>
+                                <li>Horario de salida entre las <strong>15:30</strong> y las <strong>17:30</strong></li>
+                                <li>Horario obligatorio de presencialidad de <strong>09:30</strong> a <strong>15:30</strong></li>
+                                <li>Cumplir las <strong>37 hs y media semanales</strong></li>
+                                <li>El excedente de una semana <strong>no</strong> es computable para la semana siguiente</li>
+                            </ul>
+                            <p>Ante cualquier duda sobre el horario de ingreso / egreso debe comunicarse con recursos humanos</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- Explicación sobre el funcionamiento de la tabla -->
+            <article class="informacion__funcionamiento">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            ¿Cómo funciona cada columna?
+                        </button>
+                    </h3>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <!-- Explicación de licencia -->
+                            <h5>Licencia/feriado</h5>
+                            <p>En caso de un día no laborable (sin importar el motivo) se deberá ingresar "Si" para bloquear las celdas con el fin de evitar equivocaciones</p>
+                            <ul>
+                                <li>Indicar "Si" bloqueará las celdas y eliminará el contenido ingresado sin posibilidad de recuperarlo.</li>
+                                <li>Indicar "No" habilitará nuevamente los campos para ingresar datos (no recupera los valores anteriores a ingresar "Si").</li>
+                            </ul>
+                            <!-- Explicación de Entrada -->
+                            <h5>Horario de entrada</h5>
+                            <p>Se debe ingresar el horario de ingreso.</p>
+                            <p>El formato es "hora:minuto", y va desde 00:00 hasta 23:59</p>
+                            <p>No incluye segundos.</p>
+                            <!-- Explicación de total -->
+                            <h5>Tener en cuenta el total</h5>
+                            <p>Si se cuenta con exceso/falta de tiempo en los días anteriores se puede utilizar esta función para calcular la nueva hora a la que se debería salir para quedar en 0</p>
+                            <ul>
+                                <li>Indicar "Si" recalculará el campo "Debería salir" y eliminará el contenido de las siguientes celdas del mismo día (no se podrá recuperar la información borrada)</li>
+                                <li>Indicar "No" recalculará el campo "Debería salir"</li>
+                            </ul>
+                            <!-- Explicación de el campo debería salir -->
+                            <h5>Debería salir</h5>
+                            <p>Muestra la hora a la que debería salir teniendo en cuenta el horario de entrada ingresado y una jornada de 7 hs y media.</p>
+                            <!-- Explicación de Salida -->
+                            <h5>Horario de salida</h5>
+                            <p>Se debe ingresar el horario de egreso.</p>
+                            <p>El formato es idéntico al horario de entrada.</p>
+                            <p>No incluye segundos.</p>
+                            <!-- Explicación de hs trabajadas -->
+                            <h5>Horas trabajadas</h5>
+                            <p>Muestra las horas que se trabajaron en el día.</p>
+                            <!-- Explicación de diferencia -->
+                            <h5>Diferencia - Faltó/Sobró</h5>
+                            <p>Ambas celdas muestran la diferencia del día entre los campos Debería salir y Horario de Salida.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- Explicacion del totalizador -->
+            <article class="informacion__totalizador">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Acerca del totalizador y el botón reiniciar
+                        </button>
+                    </h3>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <h5>Fila total</h5>
+                            <p>La fila total está pensada para mostrar la suma de los datos "Horas trabajadas", "Diferencia" y "Faltó/Sobró"</p>
+                            <p>La fila cambiará a color verde cuando en el total se cuente con minutos "a favor"</p>
+                            <p>La fila cambiará a color rojo cuando en el total se deban "recuperar" minutos</p>
+                            <h5 class="pt-3">Botón de reinicio</h5>
+                            <p>El botón de reinicio borrará todo el contenido de la tabla.</p>
+                            <p>Una vez que se reinicie los valores no se podrán recuperar</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- Explicación como funciona el "almacenamiento" de los datos -->
+            <article class="informacion__datos">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Acerca del datos ingresados
+                        </button>
+                    </h3>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <p>La página no almacena datos más allá del navegador por lo tanto no podrá visualizar la información ingresada en otros navegadores o dispositivos</p>
+                            <p>Los valores una vez que son borrados (manualmente o mediante el botón reinicio) o reemplazados no pueden recuperarse. Deben volver a ingresarse de forma manual.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- Liberacion de responsabilidad por el uso de la página -->
+            <article class="informacion__responsabilidad">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Liberación de responsabilidad
+                        </button>
+                    </h3>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <p>Al utilizar la página web se hace responsable por el uso, resultado y las decisiones en base al contenido de la página.</p>
+                            <p>Al utilizar la página web usted entiende que la información que contiene la misma puede contener errores.</p>
+                            <p>Por lo tanto, la responsabilidad por daños causados por el uso de cualquier información provista, que incluye cualquier tipo de información, incompleta o incorrecta, serán responsabilidad del usuario final.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
     </main>
-    <div class="pt-3 pt-sm-2 pt-md-2 pt-lg-2 pt-xl-2 pb-3 pb-sm-2 pb-md-2 pb-lg-2 pb-xl-3 pl-0"></div>
     <footer class="">
         <section class="border-top bg-light my-3">
             <p class="fw-semibold fst-italic text-center fs-4">Web desarrollada por Nicolás Temprano</p>
-            <p class="fst-italic text-center" style="font-size: 0.75rem;">Los resultados mostrados pueden contener errores - Al utilizarla se hace responsable de las decisiones que tome.</p>
-            <p class="fst-italic text-center">Página web pensada para empleados de Federación Patronal - Ante cualquier inconveniente en el uso reportarlo a  <span class="text-uppercase text-primary"><a href="mailto:nntempra@fedpat.com.ar">nntempra</a></span>. Gracias :D</p>
+            <p class="fst-italic text-center">Página web pensada para empleados de Federación Patronal S.A.</p>
         </section>
     </footer>
     <!-- Bootstrap JS -->

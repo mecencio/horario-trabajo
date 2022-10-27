@@ -323,14 +323,17 @@ class Total {
 
 /********** FUNCIONES **********/
 
+// Dado un número convierte y devuelve un string de formato "hh:mm"
 function convertirEnHora (x) {
     return parseInt(x/60).toLocaleString('es-ES', {minimumIntegerDigits: 2}) + ":" + parseInt((60 * (x/60 - parseInt(x/60))).toFixed(2)).toLocaleString('es-ES', {minimumIntegerDigits: 2});
 }
 
+// Dado un String de formato "hh:mm" devuelve un entero
 function convertirEnInt (hora) {
     return parseFloat(hora.slice(0,3))*60 + parseFloat(hora.slice(3));
 }
 
+// Crea un objeto tomando todos los ID del día pasado por parámetro.
 function crearObjetoDia (e) {
     let aux = [];
     aux.push(document.getElementById(`licencia${e}`));
@@ -344,6 +347,7 @@ function crearObjetoDia (e) {
     return new Datos (e, ...aux);
 }
 
+// Modifica el valor del campo "Debería Salir" del día (objeto) pasado por parámetro.
 function setearDeberiaSalir(obj) {
     let aux = convertirEnInt(obj.getEntrada().value) + 450;
     if (aux < 930) {
@@ -356,16 +360,17 @@ function setearDeberiaSalir(obj) {
     }
 }
 
+// Función recursiva que va sumando el excedente por día hasta llegar a Lunes o alguno de los días tenga en "true" contarElTotal
 function diferenciasAnteriores(dia) {
     switch (dia) {
         case "Viernes":
-            if(jueves.getTenerEnCuenta().value == "true") return 0;
+            if(jueves.getTenerEnCuenta().value == "true") return jueves.getIntDiferencia();
             else return jueves.getIntDiferencia() + diferenciasAnteriores("Jueves");
         case "Jueves":
-            if(miercoles.getTenerEnCuenta().value == "true") return 0;
+            if(miercoles.getTenerEnCuenta().value == "true") return miercoles.getIntDiferencia();
             else return miercoles.getIntDiferencia() + diferenciasAnteriores("Miercoles");
         case "Miercoles":
-            if(martes.getTenerEnCuenta().value == "true") return 0;
+            if(martes.getTenerEnCuenta().value == "true") return martes.getIntDiferencia();
             else return martes.getIntDiferencia() + diferenciasAnteriores("Martes");
         case "Martes":
             return lunes.getIntDiferencia();
@@ -374,6 +379,7 @@ function diferenciasAnteriores(dia) {
     }
 }
 
+// Función para sumar/restar la diferencia total al debería del día pasado por parámetro.
 function tenerEnCuentaElTotal (obj, total) {
     if (obj.getDia() != "Lunes" && obj.getEntrada().value != "") {
         let auxDeb = convertirEnInt(obj.getDeberiaSalir().value);
@@ -403,6 +409,7 @@ function tenerEnCuentaElTotal (obj, total) {
     }
 }
 
+// Setea días, total y storage en ""
 function reiniciar () {
     lunes.borrarDatos();
     martes.borrarDatos();
