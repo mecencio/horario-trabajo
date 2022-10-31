@@ -120,7 +120,7 @@ class Datos {
         if (this.#deberiaSalir.value != "" && this.#salida.value != "") {
 
             let entrada = convertirEnInt(this.#entrada.value);
-            let deberia = convertirEnInt(this.#deberiaSalir.value);
+            let deberia = entrada+450;
             let salida = convertirEnInt(this.#salida.value);
             let dif;
 
@@ -215,8 +215,8 @@ class Total {
 
     #devolerDiferenciaTotal(l, ma, mi, j, v) {
         let aux = 0;
-        if (l.getDiferencia().value != "") {
-            aux += l.getIntDiferencia();
+        if (l.getEntrada().value != "" && l.getSalida().value != "") {
+            aux += convertirEnInt(l.getSalida().value) - (convertirEnInt(l.getEntrada().value)+450);;
         }
 
         if (ma.getEntrada().value != "" && ma.getSalida().value != "") {
