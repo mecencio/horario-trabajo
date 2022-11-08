@@ -130,18 +130,24 @@ class Datos {
                     this.#hsTrab.value = convertirEnHora(dif);
                     dif = (deberia-salida);
                     this.#diferencia.value = convertirEnHora(dif);
+                    this.#diferencia.className = "fw-bold text-danger"
                     this.#difTexto.value = "Faltó";
+                    this.#difTexto.className = "w-75 text-center fw-bold text-danger"
                 } else if (deberia < salida) {
                     dif = (salida-entrada);
                     this.#hsTrab.value = convertirEnHora(dif);
                     dif = (salida-deberia);
                     this.#diferencia.value = convertirEnHora(dif);
+                    this.#diferencia.className = "fw-bold text-success"
                     this.#difTexto.value = "Sobró";
+                    this.#difTexto.className = "w-75 text-center fw-bold text-success"
                 } else {
                     dif = (salida-entrada);
                     this.#hsTrab.value = convertirEnHora(dif);
                     this.#diferencia.value = ""
+                    this.#diferencia.className = ""
                     this.#difTexto.value = "";
+                    this.#difTexto.className = "w-75 text-center fw-bold"
                 }
             }
         }
