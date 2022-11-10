@@ -5,7 +5,10 @@ function convertirEnHora (x) {
 
 // Dado un String de formato "hh:mm" devuelve un entero
 function convertirEnInt (hora) {
-    return parseFloat(hora.slice(0,3))*60 + parseFloat(hora.slice(3));
+    if (hora == "")
+        return 0
+    else
+        return parseFloat(hora.slice(0,3))*60 + parseFloat(hora.slice(3));
 }
 
 // Crea un objeto tomando todos los ID del día pasado por parámetro.
@@ -22,30 +25,11 @@ function crearObjetoDia (e) {
     return new Datos (e, ...aux);
 }
 
-// Función recursiva que va sumando el excedente por día hasta llegar a Lunes o alguno de los días tenga en "true" contarElTotal
-function diferenciasAnteriores(dia) {
-    switch (dia) {
-        case "Viernes":
-            if(jueves.getTenerEnCuenta().value == "true") return jueves.getIntDiferencia();
-            else return jueves.getIntDiferencia() + diferenciasAnteriores("Jueves");
-        case "Jueves":
-            if(miercoles.getTenerEnCuenta().value == "true") return miercoles.getIntDiferencia();
-            else return miercoles.getIntDiferencia() + diferenciasAnteriores("Miercoles");
-        case "Miercoles":
-            if(martes.getTenerEnCuenta().value == "true") return martes.getIntDiferencia();
-            else return martes.getIntDiferencia() + diferenciasAnteriores("Martes");
-        case "Martes":
-            return lunes.getIntDiferencia();
-        default:
-            return 0;
-    }
-}
-
 // Función para sumar/restar la diferencia total al debería del día pasado por parámetro.
 function tenerEnCuentaElTotal (obj, total) {
     if (obj.getDia() != "Lunes" && obj.getEntrada().value != "") {
         let auxDeb = convertirEnInt(obj.getDeberiaSalir().value);
-        let auxDif = diferenciasAnteriores(obj.getDia());
+        let auxDif = total.getIntDiferenciaTotal();
         if(obj.getTenerEnCuenta().value == "true" && (auxDeb - auxDif) < 930)
             auxDeb = 930;
 

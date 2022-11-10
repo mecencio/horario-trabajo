@@ -256,6 +256,18 @@ class Total {
         return this.#diferencia
     }
 
+    getIntDiferenciaTotal () {
+        let aux = 0
+
+        if (this.#difTexto.value == "Sobró") {
+            aux = convertirEnInt (this.#diferencia.value);
+        } else if (this.#difTexto.value == "Faltó") {
+            aux = - convertirEnInt (this.#diferencia.value);
+        }
+
+        return aux;
+    }
+
     getDifTextoTotal () {
         return this.#difTexto
     }
