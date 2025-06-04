@@ -284,7 +284,7 @@ class Total {
         this.#difTexto.value = x;
     }
 
-    #devolerDiferenciaTotal(l, ma, mi, j, v) {
+    #devolverDiferenciaTotal(l, ma, mi, j, v) {
         let aux = 0;
         if (l.getEntrada().value != "" && l.getSalida().value != "") {
             aux += convertirEnInt(l.getSalida().value) - (convertirEnInt(l.getEntrada().value)+450);;
@@ -309,7 +309,7 @@ class Total {
         return aux;
     }
 
-    #devolerHsTrabajadas(l, ma, mi, j, v) {
+    #devolverHsTrabajadas(l, ma, mi, j, v) {
         let aux = 0;
         if (l.getHsTrab().value != "") {
             aux += convertirEnInt(l.getHsTrab().value);
@@ -358,8 +358,8 @@ class Total {
 
     setearTotal(l, ma, mi, j, v) {
 
-        let diferenciaTotal = this.#devolerDiferenciaTotal(l, ma, mi, j, v);
-        let totalTrabajado = this.#devolerHsTrabajadas(l, ma, mi, j, v);
+        let diferenciaTotal = this.#devolverDiferenciaTotal(l, ma, mi, j, v);
+        let totalTrabajado = this.#devolverHsTrabajadas(l, ma, mi, j, v);
 
         this.trabajarDiferencia(diferenciaTotal, totalTrabajado)
     }
