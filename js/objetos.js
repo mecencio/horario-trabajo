@@ -152,14 +152,14 @@ class Datos {
     }
 
     #setearErrores(){
-        if (convertirEnInt(this.#entrada.value) < 450) {
+        if (this.#entrada.value !== "" && convertirEnInt(this.#entrada.value) < 450) {
             let errorEntrada = document.getElementById(`errorEntrada${this.#dia}`);
             let error = document.createElement("p");
             error.className = "my-1";
             error.innerText = " * La entrada debe ser a partir de las 07:30";
             errorEntrada.appendChild(error);
         }
-        if (convertirEnInt(this.#salida.value) < 930) {
+        if (this.#salida.value !== "" && convertirEnInt(this.#salida.value) < 930) {
             let errorSalida = document.getElementById(`errorSalida${this.#dia}`);
             let error2 = document.createElement("p");
             error2.className = "my-1";
@@ -287,7 +287,7 @@ class Total {
     #devolverDiferenciaTotal(l, ma, mi, j, v) {
         let aux = 0;
         if (l.getEntrada().value != "" && l.getSalida().value != "") {
-            aux += convertirEnInt(l.getSalida().value) - (convertirEnInt(l.getEntrada().value)+450);;
+            aux += convertirEnInt(l.getSalida().value) - (convertirEnInt(l.getEntrada().value)+450);
         }
 
         if (ma.getEntrada().value != "" && ma.getSalida().value != "") {
