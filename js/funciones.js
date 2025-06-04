@@ -86,21 +86,25 @@ function eventosDia (obj, total) {
 
     // Mira si hay cambios en el horario de entrada
     obj.getEntrada().addEventListener("change", () => {
-        // Traigo el div que contiene el mensaje de error
-        let divError = document.getElementById(`errorEntrada${obj.getDia()}`);
+        // Traigo los contenedores que muestran el mensaje de error
+        let divErrores = document.querySelectorAll(
+            `#errorEntrada${obj.getDia()}Mobile, #errorEntrada${obj.getDia()}Desktop`
+        );
         // Si hay un cambio no sé si va a haber error con el nuevo cambio
-        // Por lo tanto borro el contenido
-        divError.innerHTML = "";
+        // Por lo tanto borro el contenido de ambos contenedores
+        divErrores.forEach(div => div.innerHTML = "");
         // Me fijo si hay error (puse que entré antes de las 7:30)
         if (convertirEnInt(obj.getEntrada().value) < 450) {
             // Creo un elemento <p></p> que va a contener el error
-            let error = document.createElement("p");
-            // Le agrego la clase
-            error.className = "my-1";
-            // Defino el mensaje de error
-            error.innerText = " * La entrada debe ser a partir de las 07:30";
-            // Lo agrego al div
-            divError.appendChild(error);
+            divErrores.forEach(div => {
+                let error = document.createElement("p");
+                // Le agrego la clase
+                error.className = "my-1";
+                // Defino el mensaje de error
+                error.innerText = " * La entrada debe ser a partir de las 07:30";
+                // Lo agrego al div correspondiente
+                div.appendChild(error);
+            });
         }
         obj.setearDeberiaSalir();
         if (obj.getTenerEnCuenta().value == "true") {
@@ -136,13 +140,17 @@ function eventosDia (obj, total) {
 
     // Mira si hay cambios en el horario de salida
     obj.getSalida().addEventListener("change", () => {
-        let divError = document.getElementById(`errorSalida${obj.getDia()}`);
-        divError.innerHTML = "";
+        let divErrores = document.querySelectorAll(
+            `#errorSalida${obj.getDia()}Mobile, #errorSalida${obj.getDia()}Desktop`
+        );
+        divErrores.forEach(div => div.innerHTML = "");
         if (convertirEnInt(obj.getSalida().value) < 930) {
-            let error = document.createElement("p");
-            error.className = "my-1";
-            error.innerText = " * La salida debe ser a partir de las 15:30";
-            divError.appendChild(error);
+            divErrores.forEach(div => {
+                let error = document.createElement("p");
+                error.className = "my-1";
+                error.innerText = " * La salida debe ser a partir de las 15:30";
+                div.appendChild(error);
+            });
         }
         if (obj.getSalida().value == "") {
             obj.limpiar();

@@ -153,18 +153,26 @@ class Datos {
 
     #setearErrores(){
         if (convertirEnInt(this.#entrada.value) < 450) {
-            let errorEntrada = document.getElementById(`errorEntrada${this.#dia}`);
-            let error = document.createElement("p");
-            error.className = "my-1";
-            error.innerText = " * La entrada debe ser a partir de las 07:30";
-            errorEntrada.appendChild(error);
+            let erroresEntrada = document.querySelectorAll(
+                `#errorEntrada${this.#dia}Mobile, #errorEntrada${this.#dia}Desktop`
+            );
+            erroresEntrada.forEach(div => {
+                let error = document.createElement("p");
+                error.className = "my-1";
+                error.innerText = " * La entrada debe ser a partir de las 07:30";
+                div.appendChild(error);
+            });
         }
         if (convertirEnInt(this.#salida.value) < 930) {
-            let errorSalida = document.getElementById(`errorSalida${this.#dia}`);
-            let error2 = document.createElement("p");
-            error2.className = "my-1";
-            error2.innerText = " * La salida debe ser a partir de las 15:30";
-            errorSalida.appendChild(error2);
+            let erroresSalida = document.querySelectorAll(
+                `#errorSalida${this.#dia}Mobile, #errorSalida${this.#dia}Desktop`
+            );
+            erroresSalida.forEach(div => {
+                let error2 = document.createElement("p");
+                error2.className = "my-1";
+                error2.innerText = " * La salida debe ser a partir de las 15:30";
+                div.appendChild(error2);
+            });
         }
     }
 
