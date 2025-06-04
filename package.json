@@ -1,0 +1,16 @@
+{
+  "name": "horario-trabajo",
+  "version": "1.0.0",
+  "description": "La página fue pensada para empleados de una Empresa con el motivo de poder llevar un control sobre su jornada de trabajo y el uso de la jornada flexible.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}
